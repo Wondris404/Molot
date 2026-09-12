@@ -1,6 +1,6 @@
 # MOLOT
 
-**MOLOT — Made by WONDRIS dev** is open-source, local-first software for personal
+**MOLOT** is open-source, local-first software for personal
 progress and achievement. It began as a school-focused application and currently
 offers its most complete experience for school; local goals and progress establish
 the shared foundation for personal and work use. It stores data locally and has no
@@ -11,6 +11,10 @@ Source code is available under the [MIT License](LICENSE). See
 
 Current working version: **3.5.0 — AI Improvement Version**. The product name remains
 **MOLOT**. Stable installers are kept in versioned release directories.
+
+## Author
+
+Originally created by **Ondrej Lučivjanský-Wondris404**.
 
 ## Desktopová verzia Windows 11
 

@@ -56,15 +56,25 @@ async function launch() {
     .poll(() => context.pages().length, { timeout: 15000 })
     .toBeGreaterThan(0);
   const page = context.pages()[0];
+  await expect(page.getByRole("main")).toBeVisible({ timeout: 30000 });
   const onboarding = page.getByRole("dialog", { name: "Vitaj v MOLOTe" });
+  const schoolDashboard = page.getByRole("heading", {
+    name: "Tvoj školský prehľad.",
+    exact: true,
+  });
+  await expect
+    .poll(
+      async () =>
+        (await onboarding.isVisible()) || (await schoolDashboard.isVisible()),
+      { timeout: 30000 },
+    )
+    .toBe(true);
   if (await onboarding.isVisible()) {
     await onboarding.getByLabel("Ako ťa máme oslovovať?").fill("TEST Desktop");
     await onboarding.getByRole("button", { name: "Začať" }).click();
     await expect(onboarding).not.toBeVisible();
   }
-  await expect(
-    page.getByRole("heading", { name: "Tvoj školský prehľad.", exact: true }),
-  ).toBeVisible({ timeout: 30000 });
+  await expect(schoolDashboard).toBeVisible({ timeout: 30000 });
   return page;
 }
 async function stop() {

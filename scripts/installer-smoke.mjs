@@ -49,5 +49,20 @@ try {
     spawnSync(uninstaller, ["/S"], { windowsHide: true, timeout: 180_000 });
   }
   // Installation binaries are disposable; persisted smoke evidence stays under data/.
-  rmSync(installDirectory, { recursive: true, force: true, maxRetries: 3 });
+  let cleanupError;
+  for (let attempt = 0; attempt < 30 && existsSync(installDirectory); attempt += 1) {
+    try {
+      rmSync(installDirectory, {
+        recursive: true,
+        force: true,
+        maxRetries: 5,
+        retryDelay: 200,
+      });
+      cleanupError = undefined;
+    } catch (error) {
+      cleanupError = error;
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    }
+  }
+  if (cleanupError && existsSync(installDirectory)) throw cleanupError;
 }

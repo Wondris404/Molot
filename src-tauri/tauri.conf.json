@@ -6,7 +6,7 @@
   "build": { "frontendDist": "../desktop/splash" },
   "app": { "windows": [], "security": { "capabilities": [], "csp": null } },
   "bundle": {
-    "copyright": "© 2026 WONDRIS dev",
+    "copyright": "© 2026 Ondrej Lučivjanský-Wondris404",
     "active": true,
     "targets": ["nsis"],
     "useLocalToolsDir": true,

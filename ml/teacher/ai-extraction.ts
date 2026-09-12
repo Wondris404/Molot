@@ -1,8 +1,13 @@
 import { miniAiStatus } from "@/ml/mini-ai/model";
-import { chunkText, runMiniAiTask } from "@/ml/mini-ai/router";
+import {
+  chunkText,
+  runMiniAiTask,
+  type MiniAiRunOptions,
+} from "@/ml/mini-ai/router";
 import { normalize, textSimilarity } from "../common/text";
 import { suggestQuestions, suggestTopics } from "./extraction";
 import { questionTypes, type MaterialTopic } from "./types";
+import type { TeacherQuestion } from "./types";
 
 function topicCandidates(question: string, topics: MaterialTopic[]) {
   return topics
@@ -24,6 +29,7 @@ function topicCandidates(question: string, topics: MaterialTopic[]) {
 export async function suggestQuestionsWithMiniAi(
   text: string,
   topics: MaterialTopic[],
+  historicalQuestions: TeacherQuestion[] = [],
 ) {
   const questions = suggestQuestions(text, topics);
   if (!miniAiStatus().ready) return questions;
@@ -44,13 +50,31 @@ export async function suggestQuestionsWithMiniAi(
     const matchedTopic = candidates.find(
       (candidate) => normalize(candidate) === normalize(result.topic ?? ""),
     );
+    let semanticTopic = "";
+    if (!matchedTopic && !question.topic) {
+      const historical = historicalQuestions
+        .filter((candidate) => candidate.topic)
+        .map((candidate) => ({
+          candidate,
+          lexical: textSimilarity(question.text, candidate.text),
+        }))
+        .sort((left, right) => right.lexical - left.lexical)
+        .slice(0, 6);
+      for (const { candidate } of historical) {
+        const comparison = await semanticQuestionMatch(question.text, candidate.text);
+        if (comparison.sameMeaning && comparison.confidence !== "low") {
+          semanticTopic = candidate.topic;
+          break;
+        }
+      }
+    }
     questions[index] = {
       ...question,
       questionType:
         result.questionType in questionTypes
           ? (result.questionType as keyof typeof questionTypes)
           : question.questionType,
-      topic: matchedTopic ?? question.topic,
+      topic: matchedTopic || semanticTopic || question.topic,
     };
   }
   return questions;
@@ -74,13 +98,22 @@ export async function suggestTopicsWithMiniAi(text: string) {
   return [...new Map([...deterministic, ...inferred].map((topic) => [normalize(topic), topic])).values()].slice(0, 60);
 }
 
-export async function semanticQuestionMatch(first: string, second: string) {
+export async function semanticQuestionMatch(
+  first: string,
+  second: string,
+  options: MiniAiRunOptions = {},
+) {
   const lexical = textSimilarity(first, second);
   if (lexical >= 0.82)
     return { sameMeaning: true, confidence: "high" as const, lexical };
-  if (lexical <= 0.08 || !miniAiStatus().ready)
-    return { sameMeaning: false, confidence: lexical <= 0.08 ? ("high" as const) : ("low" as const), lexical };
-  const result = await runMiniAiTask("compare_questions", { first, second });
+  if (!options.infer && !miniAiStatus().ready)
+    return { sameMeaning: false, confidence: "low" as const, lexical };
+  const result = await runMiniAiTask(
+    "compare_questions",
+    { first, second },
+    {},
+    options,
+  );
   return {
     sameMeaning: result?.sameMeaning ?? false,
     confidence: result?.confidence ?? ("low" as const),

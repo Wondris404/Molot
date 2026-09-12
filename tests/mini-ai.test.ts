@@ -5,6 +5,63 @@ import {
   refineMiniAiOutput,
   runMiniAiTask,
 } from "../ml/mini-ai/router";
+import { interpretText } from "../lib/smart-input";
+import type { Subject } from "../lib/types";
+import { semanticQuestionMatch } from "../ml/teacher/ai-extraction";
+
+const subjects: Subject[] = [
+  { id: "biology", name: "Biológia", color: "#00aa00", createdAt: "2026-01-01" },
+  { id: "chemistry", name: "Chémia", color: "#aa0000", createdAt: "2026-01-01" },
+];
+
+test("informal Slovak Smart Add keeps exact school facts", () => {
+  const result = interpretText("z bio mam 18/20 dvojku", subjects);
+  assert.equal(result.kind, "test_result");
+  assert.equal(result.fields.subjectId, "biology");
+  assert.equal(result.fields.earnedPoints, 18);
+  assert.equal(result.fields.maxPoints, 20);
+  assert.equal(result.fields.percentage, 90);
+  assert.equal(result.fields.grade, 2);
+});
+
+test("informal Slovak test extracts weekday topic and planned minutes", () => {
+  const result = interpretText("vo stvrtok piseme chemiu redox asi 3h", subjects);
+  assert.equal(result.kind, "test");
+  assert.equal(result.fields.subjectId, "chemistry");
+  assert.equal(result.fields.topics, "redox");
+  assert.equal(result.fields.plannedMinutes, 180);
+  assert.match(String(result.fields.date), /^20\d{2}-\d{2}-\d{2}$/);
+});
+
+test("activity parsing preserves distance and clock time", () => {
+  const result = interpretText("behal som 5km za 24:30", subjects);
+  assert.equal(result.kind, "progress");
+  assert.equal(result.fields.value, 5);
+  assert.equal(result.fields.unit, "km");
+  assert.equal(result.fields.duration, "24:30");
+});
+
+test("semantic teacher comparison can relate questions without shared words", async () => {
+  let called = false;
+  const result = await semanticQuestionMatch(
+    "Vysvetli Calvinov cyklus.",
+    "Popíš fixáciu CO2 v stróme chloroplastu.",
+    {
+      useCache: false,
+      infer: async () => {
+        called = true;
+        return {
+          sameMeaning: true,
+          confidence: "medium",
+          sharedConcept: "Calvinov cyklus",
+        };
+      },
+    },
+  );
+  assert.equal(called, true);
+  assert.equal(result.sameMeaning, true);
+  assert.equal(result.confidence, "medium");
+});
 
 test("Mini AI router constrains tasks and lets deterministic facts win", async () => {
   let requestedSchema = false;

@@ -182,7 +182,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <footer className="main-footer">
           <span>
             MOLOT{" "}
-            <span className="muted">— Made by WONDRIS dev · Open-source software</span>
+            <span className="muted">— Created by Ondrej Lučivjanský-Wondris404 · Open-source software</span>
           </span>
           <span className="muted">LOCAL · v{packageMetadata.version}</span>
         </footer>

@@ -117,6 +117,16 @@ export async function POST(request: Request) {
                     material.subjectId === document.subjectId,
                 ),
               ),
+              data.questions.filter((question) =>
+                data.documents.some(
+                  (historical) =>
+                    historical.id === question.documentId &&
+                    historical.id !== document.id &&
+                    historical.kind === "test" &&
+                    historical.subjectId === document.subjectId &&
+                    (!document.teacherId || historical.teacherId === document.teacherId),
+                ),
+              ),
             ),
           });
         return NextResponse.json({

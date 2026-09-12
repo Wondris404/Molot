@@ -145,7 +145,7 @@ export function SettingsPage() {
       <div className="two-column">
         <Card title="Môj profil" subtitle="Lokálny profil bez online účtu"><ProfileForm /></Card>
         <Card title="O aplikácii">
-          <div className="stack small muted"><p><strong className="text-[#d3ddcb]">MOLOT — Made by WONDRIS dev</strong></p><p>Open-source software. Tvoje údaje zostávajú uložené lokálne.</p></div>
+          <div className="stack small muted"><p><strong className="text-[#d3ddcb]">MOLOT</strong></p><p>Created by Ondrej Lučivjanský-Wondris404</p><p>Open-source software. Tvoje údaje zostávajú uložené lokálne.</p></div>
         </Card>
         <MiniAiSettings />
         <ModelSettings />

@@ -1,8 +1,8 @@
 [package]
 name = "molot"
 version = "3.5.0"
-description = "MOLOT — local-first personal progress system by WONDRIS dev"
-authors = ["WONDRIS dev"]
+description = "MOLOT — local-first personal progress system by Ondrej Lučivjanský-Wondris404"
+authors = ["Ondrej Lučivjanský-Wondris404"]
 license = "MIT"
 edition = "2021"
 
