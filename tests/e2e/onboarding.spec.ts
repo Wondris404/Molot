@@ -1,0 +1,37 @@
+import { test, expect } from "@playwright/test";
+
+test("new local profile, smart input and personal goal persist", async ({ page, request }, testInfo) => {
+  await request.patch("/api/global/profile", { data: { name: "TEST pending", modules: ["school"], mainGoal: "", onboardingComplete: false } });
+  await page.goto("/");
+  const welcome = page.getByRole("dialog", { name: "Vitaj v MOLOTe" });
+  await welcome.getByLabel("Ako ťa máme oslovovať?").fill(`TEST ${testInfo.project.name}`);
+  await welcome.getByLabel("Osobné ciele / hobby").check();
+  await welcome.getByRole("button", { name: "Začať" }).click();
+  await expect(welcome).not.toBeVisible();
+  const subjectName = `TEST Smart ${testInfo.project.name}`;
+  const subject = await (await request.post("/api/data/subjects", { data: { name: subjectName, color: "#88aa55" } })).json();
+  await page.getByRole("button", { name: /Pridať informácie/ }).click();
+  await page.getByLabel("Čo chceš pridať?").fill(`${subjectName} test budúci piatok, fotosyntéza, 4 hodiny`);
+  await page.getByRole("button", { name: "Rozpoznať" }).click();
+  await page.getByRole("button", { name: "Potvrdiť a uložiť" }).click();
+  await expect(page.getByText(`Test: ${subjectName}`, { exact: true })).toBeVisible();
+  await page.goto("/goals");
+  await page.getByRole("button", { name: "Pridať cieľ" }).click();
+  await page.getByLabel("Názov").fill("TEST Zabehnúť 10 km");
+  await page.getByLabel("Cieľová hodnota (voliteľné)").fill("10");
+  await page.getByLabel("Jednotka").fill("km");
+  await page.getByRole("button", { name: "Uložiť cieľ" }).click();
+  await page.getByLabel("Aktuálna hodnota").fill("5");
+  await page.getByRole("button", { name: "Pridať pokrok", exact: true }).click();
+  await page.reload();
+  await expect(page.getByText("5 km / 10 km", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: /Pridať informácie/ }).click();
+  await page.getByRole("button", { name: "Súbor / fotka" }).click();
+  await page.getByLabel("Priradiť k").selectOption({ label: "TEST Zabehnúť 10 km" });
+  await page.locator('input[type="file"]').setInputFiles({ name: "TEST-plan.txt", mimeType: "text/plain", buffer: Buffer.from("TEST plan") });
+  await page.getByRole("button", { name: "Potvrdiť a uložiť" }).click();
+  await expect(page.getByText("TEST-plan.txt", { exact: true })).toBeVisible();
+  const snapshot = await (await request.get("/api/data")).json();
+  for (const goal of snapshot.goals.filter((item: { name: string }) => item.name.startsWith("TEST Zabehnúť"))) await request.delete("/api/global/goals", { data: { id: goal.id } });
+  await request.delete("/api/data/subjects", { data: { id: subject.id } });
+});

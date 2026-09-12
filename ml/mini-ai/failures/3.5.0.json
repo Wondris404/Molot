@@ -1,0 +1,840 @@
+{
+  "benchmarkVersion": "3.5.0-v2",
+  "syntheticDataOnly": true,
+  "description": "Raw-model failures retained with the corrected deterministic-plus-semantic pipeline output.",
+  "rows": [
+    {
+      "id": "sk-result",
+      "category": "slovak",
+      "task": "classify_input",
+      "expected": {
+        "kind": "test_result"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1516.9791999999998,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 1
+      },
+      "currentRaw": {
+        "output": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2769.1355000000003,
+        "correct": 0,
+        "total": 1
+      },
+      "current": {
+        "output": {
+          "kind": "test_result",
+          "confidence": "high"
+        },
+        "rawOutput": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2769.1355000000003,
+        "error": null,
+        "exact": true,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "sk-test-fields",
+      "category": "slovak",
+      "task": "extract_school",
+      "expected": {
+        "subject": "Biológia",
+        "topics": [
+          "fotosyntéza"
+        ],
+        "dateExpression": "budúci piatok",
+        "durationExpression": "4 hodiny"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1582.276600000001,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 4
+      },
+      "currentRaw": {
+        "output": {
+          "subject": "Biológia",
+          "title": "Biológia test",
+          "topics": [
+            "Biológia",
+            "Matematika"
+          ],
+          "dateExpression": "budúci piatok",
+          "durationExpression": "4 hodiny prípravy",
+          "points": null,
+          "maxPoints": null,
+          "grade": null
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 4583.685800000001,
+        "correct": 2,
+        "total": 4
+      },
+      "current": {
+        "output": {
+          "subject": "Biológia",
+          "title": "Biológia test",
+          "topics": [
+            "fotosyntéza"
+          ],
+          "dateExpression": "budúci piatok",
+          "durationExpression": "4 hodiny",
+          "points": null,
+          "maxPoints": null,
+          "grade": null
+        },
+        "rawOutput": {
+          "subject": "Biológia",
+          "title": "Biológia test",
+          "topics": [
+            "Biológia",
+            "Matematika"
+          ],
+          "dateExpression": "budúci piatok",
+          "durationExpression": "4 hodiny prípravy",
+          "points": null,
+          "maxPoints": null,
+          "grade": null
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 4583.685800000001,
+        "error": null,
+        "exact": true,
+        "correct": 4,
+        "total": 4
+      }
+    },
+    {
+      "id": "sk-session",
+      "category": "slovak",
+      "task": "classify_input",
+      "expected": {
+        "kind": "study_session"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1606.4121999999988,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 1
+      },
+      "currentRaw": {
+        "output": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2565.067600000002,
+        "correct": 0,
+        "total": 1
+      },
+      "current": {
+        "output": {
+          "kind": "study_session",
+          "confidence": "high"
+        },
+        "rawOutput": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2565.067600000002,
+        "error": null,
+        "exact": true,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "ascii-teacher-test",
+      "category": "no_diacritics",
+      "task": "classify_input",
+      "expected": {
+        "kind": "teacher_test"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1792.0406999999977,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 1
+      },
+      "currentRaw": {
+        "output": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2579.345599999997,
+        "correct": 0,
+        "total": 1
+      },
+      "current": {
+        "output": {
+          "kind": "teacher_test",
+          "confidence": "high"
+        },
+        "rawOutput": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2579.345599999997,
+        "error": null,
+        "exact": true,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "ascii-goal",
+      "category": "no_diacritics",
+      "task": "extract_goal",
+      "expected": {
+        "category": "personal",
+        "value": 50,
+        "unit": "minút"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1377.7433999999994,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 3
+      },
+      "currentRaw": {
+        "output": {
+          "category": "work",
+          "name": "10 km under 50 minutes",
+          "metric": "50 minutes",
+          "value": 10,
+          "unit": "km",
+          "deadlineExpression": "50 minutes"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 3374.942200000005,
+        "correct": 0,
+        "total": 3
+      },
+      "current": {
+        "output": {
+          "category": "personal",
+          "name": "10 km under 50 minutes",
+          "metric": "50 minutes",
+          "value": 50,
+          "unit": "minút",
+          "deadlineExpression": "50 minutes"
+        },
+        "rawOutput": {
+          "category": "work",
+          "name": "10 km under 50 minutes",
+          "metric": "50 minutes",
+          "value": 10,
+          "unit": "km",
+          "deadlineExpression": "50 minutes"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 3374.942200000005,
+        "error": null,
+        "exact": true,
+        "correct": 3,
+        "total": 3
+      }
+    },
+    {
+      "id": "personal-goal-fields",
+      "category": "personal_goals",
+      "task": "extract_goal",
+      "expected": {
+        "category": "personal",
+        "value": 12,
+        "unit": "knihy"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1477.4614999999976,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 3
+      },
+      "currentRaw": {
+        "output": {
+          "category": "work",
+          "name": "prečítať 12 kníh tento rok",
+          "metric": "50 min",
+          "value": 10,
+          "unit": "km",
+          "deadlineExpression": "10 km under 50 minutes"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 4422.659299999999,
+        "correct": 0,
+        "total": 3
+      },
+      "current": {
+        "output": {
+          "category": "personal",
+          "name": "prečítať 12 kníh tento rok",
+          "metric": "50 min",
+          "value": 12,
+          "unit": "knihy",
+          "deadlineExpression": "10 km under 50 minutes"
+        },
+        "rawOutput": {
+          "category": "work",
+          "name": "prečítať 12 kníh tento rok",
+          "metric": "50 min",
+          "value": 10,
+          "unit": "km",
+          "deadlineExpression": "10 km under 50 minutes"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 4422.659299999999,
+        "error": null,
+        "exact": true,
+        "correct": 3,
+        "total": 3
+      }
+    },
+    {
+      "id": "personal-progress",
+      "category": "personal_goals",
+      "task": "extract_goal",
+      "expected": {
+        "category": "personal",
+        "value": 35,
+        "unit": "strán"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1240.8484999999928,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 3
+      },
+      "currentRaw": {
+        "output": {
+          "category": "work",
+          "name": "Dnes",
+          "metric": "50",
+          "value": 10,
+          "unit": "km",
+          "deadlineExpression": "50 minutes"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 3700.6442000000097,
+        "correct": 0,
+        "total": 3
+      },
+      "current": {
+        "output": {
+          "category": "personal",
+          "name": "Dnes",
+          "metric": "50",
+          "value": 35,
+          "unit": "strán",
+          "deadlineExpression": "50 minutes"
+        },
+        "rawOutput": {
+          "category": "work",
+          "name": "Dnes",
+          "metric": "50",
+          "value": 10,
+          "unit": "km",
+          "deadlineExpression": "50 minutes"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 3700.6442000000097,
+        "error": null,
+        "exact": true,
+        "correct": 3,
+        "total": 3
+      }
+    },
+    {
+      "id": "work-goal-fields",
+      "category": "work",
+      "task": "extract_goal",
+      "expected": {
+        "category": "work",
+        "deadlineExpression": "15. októbra"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1545.9848999999958,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 2
+      },
+      "currentRaw": {
+        "output": {
+          "category": "work",
+          "name": "10 km under 50 minutes",
+          "metric": "50 minutes",
+          "value": 10,
+          "unit": "km",
+          "deadlineExpression": "10 km under 50 minutes"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 4195.2706000000035,
+        "correct": 1,
+        "total": 2
+      },
+      "current": {
+        "output": {
+          "category": "work",
+          "name": "10 km under 50 minutes",
+          "metric": "50 minutes",
+          "value": 10,
+          "unit": "km",
+          "deadlineExpression": "15. októbra"
+        },
+        "rawOutput": {
+          "category": "work",
+          "name": "10 km under 50 minutes",
+          "metric": "50 minutes",
+          "value": 10,
+          "unit": "km",
+          "deadlineExpression": "10 km under 50 minutes"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 4195.2706000000035,
+        "error": null,
+        "exact": true,
+        "correct": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "work-progress",
+      "category": "work",
+      "task": "classify_input",
+      "expected": {
+        "kind": "progress_entry"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1789.6699999999983,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 1
+      },
+      "currentRaw": {
+        "output": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2530.1898000000074,
+        "correct": 0,
+        "total": 1
+      },
+      "current": {
+        "output": {
+          "kind": "progress_entry",
+          "confidence": "high"
+        },
+        "rawOutput": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2530.1898000000074,
+        "error": null,
+        "exact": true,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "question-explanation",
+      "category": "question_type",
+      "task": "classify_question",
+      "expected": {
+        "questionType": "explanation",
+        "topic": "Calvinov cyklus"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 2528.9997000000003,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 2
+      },
+      "currentRaw": {
+        "output": {
+          "questionType": "definition",
+          "topic": "Calvinov cyklus",
+          "confidence": "high"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2616.9590000000026,
+        "correct": 1,
+        "total": 2
+      },
+      "current": {
+        "output": {
+          "questionType": "explanation",
+          "topic": "Calvinov cyklus",
+          "confidence": "high"
+        },
+        "rawOutput": {
+          "questionType": "definition",
+          "topic": "Calvinov cyklus",
+          "confidence": "high"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2616.9590000000026,
+        "error": null,
+        "exact": true,
+        "correct": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "question-calculation",
+      "category": "question_type",
+      "task": "classify_question",
+      "expected": {
+        "questionType": "calculation",
+        "topic": "Rýchlosť"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 2776.754700000005,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 2
+      },
+      "currentRaw": {
+        "output": {
+          "questionType": "definition",
+          "topic": "rýchlosť",
+          "confidence": "high"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2674.323199999999,
+        "correct": 1,
+        "total": 2
+      },
+      "current": {
+        "output": {
+          "questionType": "calculation",
+          "topic": "Rýchlosť",
+          "confidence": "high"
+        },
+        "rawOutput": {
+          "questionType": "definition",
+          "topic": "rýchlosť",
+          "confidence": "high"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2674.323199999999,
+        "error": null,
+        "exact": true,
+        "correct": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "topics-notes",
+      "category": "topic_mapping",
+      "task": "extract_topics",
+      "expected": {
+        "topics": [
+          "Fotosyntéza",
+          "svetelnú fázu",
+          "Calvinov cyklus",
+          "RuBisCO"
+        ]
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1902.560599999997,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 1
+      },
+      "currentRaw": {
+        "output": {
+          "topics": [
+            "Fotosyntéza",
+            "Calvinov cyklus"
+          ]
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 1926.6255000000092,
+        "correct": 0,
+        "total": 1
+      },
+      "current": {
+        "output": {
+          "topics": [
+            "Fotosyntéza",
+            "Calvinov cyklus",
+            "svetelnú fázu",
+            "RuBisCO"
+          ]
+        },
+        "rawOutput": {
+          "topics": [
+            "Fotosyntéza",
+            "Calvinov cyklus"
+          ]
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 1926.6255000000092,
+        "error": null,
+        "exact": true,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "semantic-different",
+      "category": "semantic_matching",
+      "task": "compare_questions",
+      "expected": {
+        "sameMeaning": false
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 2118.073000000004,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 1
+      },
+      "currentRaw": {
+        "output": {
+          "sameMeaning": true,
+          "confidence": "high",
+          "sharedConcept": "mitoza"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2402.4585999999836,
+        "correct": 0,
+        "total": 1
+      },
+      "current": {
+        "output": {
+          "sameMeaning": false,
+          "confidence": "high",
+          "sharedConcept": null
+        },
+        "rawOutput": {
+          "sameMeaning": true,
+          "confidence": "high",
+          "sharedConcept": "mitoza"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2402.4585999999836,
+        "error": null,
+        "exact": true,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "negative-same-words",
+      "category": "misleading_negative",
+      "task": "compare_questions",
+      "expected": {
+        "sameMeaning": false
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 2412.428899999999,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 1
+      },
+      "currentRaw": {
+        "output": {
+          "sameMeaning": true,
+          "confidence": "high",
+          "sharedConcept": "photosynthesis"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2488.1011,
+        "correct": 0,
+        "total": 1
+      },
+      "current": {
+        "output": {
+          "sameMeaning": false,
+          "confidence": "high",
+          "sharedConcept": null
+        },
+        "rawOutput": {
+          "sameMeaning": true,
+          "confidence": "high",
+          "sharedConcept": "photosynthesis"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2488.1011,
+        "error": null,
+        "exact": true,
+        "correct": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "ocr-teacher",
+      "category": "noisy_ocr",
+      "task": "classify_input",
+      "expected": {
+        "kind": "teacher_test"
+      },
+      "legacy": {
+        "output": null,
+        "jsonValid": false,
+        "schemaValid": false,
+        "latencyMs": 1817.061400000006,
+        "error": "invalid JSON",
+        "exact": false,
+        "correct": 0,
+        "total": 1
+      },
+      "currentRaw": {
+        "output": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "exact": false,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2624.467800000013,
+        "correct": 0,
+        "total": 1
+      },
+      "current": {
+        "output": {
+          "kind": "teacher_test",
+          "confidence": "high"
+        },
+        "rawOutput": {
+          "kind": "grade",
+          "confidence": "high"
+        },
+        "rawSchemaValid": true,
+        "jsonValid": true,
+        "schemaValid": true,
+        "latencyMs": 2624.467800000013,
+        "error": null,
+        "exact": true,
+        "correct": 1,
+        "total": 1
+      }
+    }
+  ]
+}

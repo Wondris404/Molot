@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "MOLOT",
+  "version": "../package.json",
+  "identifier": "sk.molot.desktop",
+  "build": { "frontendDist": "../desktop/splash" },
+  "app": { "windows": [], "security": { "capabilities": [], "csp": null } },
+  "bundle": {
+    "copyright": "© 2026 WONDRIS dev",
+    "active": true,
+    "targets": ["nsis"],
+    "useLocalToolsDir": true,
+    "resources": { "../desktop/resources/": "resources/" },
+    "icon": ["icons/icon.ico"],
+    "windows": {
+      "allowDowngrades": false,
+      "webviewInstallMode": { "type": "offlineInstaller", "silent": true },
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["Slovak", "English"],
+        "displayLanguageSelector": true,
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico",
+        "startMenuFolder": "MOLOT",
+        "compression": "lzma"
+      }
+    }
+  }
+}

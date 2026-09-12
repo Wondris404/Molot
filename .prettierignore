@@ -1,0 +1,13 @@
+node_modules
+.next
+.next-test
+.npm-cache
+.cache
+data
+test-results
+playwright-report
+package-lock.json
+next-env.d.ts
+desktop/resources
+desktop/release
+src-tauri/target
