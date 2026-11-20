@@ -4,7 +4,7 @@ node_modules/
 .next/
 .next-test/
 out/
-data/
+/data/
 test-results/
 playwright-report/
 *.tsbuildinfo

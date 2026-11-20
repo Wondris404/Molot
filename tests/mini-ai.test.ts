@@ -41,6 +41,23 @@ test("activity parsing preserves distance and clock time", () => {
   assert.equal(result.fields.duration, "24:30");
 });
 
+test("Smart Add keeps calendar dates in the local time zone", (context) => {
+  const originalZone = process.env.TZ;
+  process.env.TZ = "Europe/Bratislava";
+  context.after(() => {
+    if (originalZone === undefined) delete process.env.TZ;
+    else process.env.TZ = originalZone;
+  });
+  context.mock.timers.enable({
+    apis: ["Date"],
+    now: new Date("2026-11-19T23:30:00Z"),
+  });
+
+  assert.equal(interpretText("z biológie známka 2", subjects).fields.date, "2026-11-20");
+  assert.equal(interpretText("behal som 5km", subjects).fields.date, "2026-11-20");
+  assert.equal(interpretText("v pondelok píšeme chémiu", subjects).fields.date, "2026-11-23");
+});
+
 test("semantic teacher comparison can relate questions without shared words", async () => {
   let called = false;
   const result = await semanticQuestionMatch(

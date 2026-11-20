@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { localDate } from "./format";
 import type { Subject } from "./types";
 
 const kindSchema = z.enum(["test", "test_result", "grade", "goal", "progress", "unknown"]);
@@ -15,7 +16,7 @@ function nextWeekday(weekday: number) {
   const date = new Date();
   const delta = ((weekday - date.getDay() + 7) % 7) || 7;
   date.setDate(date.getDate() + delta);
-  return date.toISOString().slice(0, 10);
+  return localDate(date);
 }
 function inferredDate(text: string) {
   const value = normalize(text);
@@ -86,7 +87,7 @@ export function interpretText(input: string, subjects: Subject[]): SmartInput {
     },
     note: "Vyber test a doplň pripravenosť pred uložením výsledku.",
   };
-  if (grade && subject) return { kind: "grade", confidence: "high", fields: { subjectId: subject.id, subjectName: subject.name, value: grade, date: new Date().toISOString().slice(0, 10) }, note: "Skontroluj predmet a známku pred uložením." };
+  if (grade && subject) return { kind: "grade", confidence: "high", fields: { subjectId: subject.id, subjectName: subject.name, value: grade, date: localDate() }, note: "Skontroluj predmet a známku pred uložením." };
   const hours = value.match(/(?:asi|okolo|priblizne|around)?\s*(\d+(?:[,.]\d+)?)\s*(?:h|hod(?:iny|in)?|hours?)/)?.[1];
   if (/\b(test|pisomk\w*|skusk\w*|piseme|pisem|exam)\b/.test(value)) {
     const commaTopic = text.split(",").slice(1).join(",").replace(/(?:asi|okolo|priblizne|around)?\s*\d+(?:[,.]\d+)?\s*(?:h|hod\w*|hours?).*/i, "").trim();
@@ -98,11 +99,12 @@ export function interpretText(input: string, subjects: Subject[]): SmartInput {
       .filter((token) => token && !subjectTerms(subject?.name ?? "").some((term) => token === term || token.startsWith(term)))
       .join(" ")
       .trim();
-    return { kind: "test", confidence: subject && inferredDate(text) ? "high" : "medium", fields: { subjectId: subject?.id ?? "", subjectName: subject?.name ?? "", title: subject ? `Test: ${subject.name}` : "Nový test", date: inferredDate(text), topics: topic, plannedMinutes: hours ? Math.round(Number(hours.replace(",", ".")) * 60) : 0 }, note: "Molot údaje iba navrhol. Pred uložením ich môžeš upraviť." };
+    const date = inferredDate(text);
+    return { kind: "test", confidence: subject && date ? "high" : "medium", fields: { subjectId: subject?.id ?? "", subjectName: subject?.name ?? "", title: subject ? `Test: ${subject.name}` : "Nový test", date, topics: topic, plannedMinutes: hours ? Math.round(Number(hours.replace(",", ".")) * 60) : 0 }, note: "Molot údaje iba navrhol. Pred uložením ich môžeš upraviť." };
   }
   const run = value.match(/(?:behal|bezal|ran|run)(?:\s+(?:som|sme|i))?\s*(\d+(?:[,.]\d+)?)\s*km/);
   if (run && /\b(under|pod|ciel|goal|chcem)\b/.test(value)) return { kind: "goal", confidence: "high", fields: { name: text, category: "personal", targetValue: Number(run[1].replace(",", ".")), unit: "km" }, note: "Skontroluj cieľovú hodnotu pred uložením." };
-  if (run) return { kind: "progress", confidence: "high", fields: { activity: "Beh", value: Number(run[1].replace(",", ".")), unit: "km", duration: value.match(/(?:za|in)\s*(\d{1,2}:\d{2}(?::\d{2})?)/)?.[1] ?? null, date: new Date().toISOString().slice(0, 10), note: text }, note: "Vyber cieľ, ku ktorému patrí tento pokrok." };
+  if (run) return { kind: "progress", confidence: "high", fields: { activity: "Beh", value: Number(run[1].replace(",", ".")), unit: "km", duration: value.match(/(?:za|in)\s*(\d{1,2}:\d{2}(?::\d{2})?)/)?.[1] ?? null, date: localDate(), note: text }, note: "Vyber cieľ, ku ktorému patrí tento pokrok." };
   if (/\b(ciel|goal|chcem|under|pod)\b/.test(value)) return { kind: "goal", confidence: "medium", fields: { name: text, category: /\b(praca|work|projekt)\b/.test(value) ? "work" : /\b(test|skola|school|znamka)\b/.test(value) ? "school" : "personal" }, note: "Skontroluj názov a typ cieľa pred uložením." };
   return { kind: "unknown", confidence: "low", fields: {}, note: "Toto som zatiaľ nevedel spoľahlivo zaradiť. Vyber manuálny typ záznamu." };
 }

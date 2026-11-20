@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState, type DragEvent } from "react";
 import { FileText, ImagePlus, PenLine, Sparkles } from "lucide-react";
+import { localDate } from "@/lib/format";
 import type { SmartInput } from "@/lib/smart-input";
 import { Dialog } from "./ui";
 import { apiRequest, useApp } from "./app-provider";
@@ -40,20 +41,21 @@ export function QuickAdd() {
     try {
       if (result.kind === "test") {
         if (!selectedSubject) throw new Error("Vyber existujúci predmet; nový môžeš pridať v Nastaveniach.");
-        await save("tests", { subjectId: selectedSubject, title: String(fields.title ?? "Nový test"), date: String(fields.date ?? new Date().toISOString().slice(0, 10)), time: "", topics: String(fields.topics ?? ""), notes: "Pridané cez Pridať informácie.", difficulty: 3, targetPercent: data.settings.defaultTarget, plannedMinutes: Number(fields.plannedMinutes ?? 0), status: "planned" });
+        await save("tests", { subjectId: selectedSubject, title: String(fields.title ?? "Nový test"), date: String(fields.date ?? localDate()), time: "", topics: String(fields.topics ?? ""), notes: "Pridané cez Pridať informácie.", difficulty: 3, targetPercent: data.settings.defaultTarget, plannedMinutes: Number(fields.plannedMinutes ?? 0), status: "planned" });
       } else if (result.kind === "grade") {
         if (!selectedSubject || !fields.value) throw new Error("Pre známku vyber predmet a doplň známku.");
-        await save("grades", { subjectId: selectedSubject, value: Number(fields.value), weight: 1, date: String(fields.date ?? new Date().toISOString().slice(0, 10)), description: fields.earnedPoints ? `${fields.earnedPoints}/${fields.maxPoints} bodov` : "Pridané cez Pridať informácie.", assessmentType: "Hodnotenie" });
+        await save("grades", { subjectId: selectedSubject, value: Number(fields.value), weight: 1, date: String(fields.date ?? localDate()), description: fields.earnedPoints ? `${fields.earnedPoints}/${fields.maxPoints} bodov` : "Pridané cez Pridať informácie.", assessmentType: "Hodnotenie" });
       } else if (result.kind === "test_result") {
         if (!fields.testId || fields.readinessBefore === null || fields.readinessBefore === undefined) throw new Error("Vyber test a doplň pripravenosť pred testom.");
         if (!(Number(fields.maxPoints) > 0) || Number(fields.earnedPoints) < 0 || Number(fields.earnedPoints) > Number(fields.maxPoints)) throw new Error("Body musia byť od 0 po zadané maximum.");
         await save("results", { testId: fields.testId, earnedPoints: Number(fields.earnedPoints), maxPoints: Number(fields.maxPoints), percentage: 0, grade: fields.grade ? Number(fields.grade) : null, actualStudyMinutes: Number(fields.actualStudyMinutes ?? 0), readinessBefore: Number(fields.readinessBefore), perceivedDifficulty: 3, note: "Pridané cez Pridať informácie." });
       } else if (result.kind === "goal") {
-        await saveGlobal("goals", { name: String(fields.name ?? text), category: fields.category ?? "personal", description: "", targetValue: fields.value == null ? null : Number(fields.value), currentValue: 0, unit: String(fields.unit ?? ""), deadline: null, status: "active" });
+        const targetValue = fields.targetValue ?? fields.value;
+        await saveGlobal("goals", { name: String(fields.name ?? text), category: fields.category ?? "personal", description: "", targetValue: targetValue == null ? null : Number(targetValue), currentValue: 0, unit: String(fields.unit ?? ""), deadline: null, status: "active" });
       } else if (result.kind === "progress") {
         const goal = data.goals.find((item) => item.id === fields.goalId);
         if (!goal) throw new Error("Najprv si vytvor cieľ, ku ktorému patrí tento pokrok.");
-        await saveGlobal("progress", { goalId: goal.id, date: fields.date ?? new Date().toISOString().slice(0, 10), value: Number(fields.value), unit: fields.unit, activity: fields.activity, note: fields.note });
+        await saveGlobal("progress", { goalId: goal.id, date: fields.date ?? localDate(), value: Number(fields.value), unit: fields.unit, activity: fields.activity, note: fields.note });
       } else throw new Error("Vyber manuálny typ záznamu.");
       if (originalResult?.source === "mini_ai") {
         void apiRequest("/api/mini-ai/feedback", {
