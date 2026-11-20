@@ -1,5 +1,25 @@
 import { test, expect } from "@playwright/test";
 
+test("Smart Add persists the proposed goal target", async ({ page, request }, testInfo) => {
+  const profile = await request.patch("/api/global/profile", {
+    data: { name: "TEST Smart Add", modules: ["school", "personal"], onboardingComplete: true },
+  });
+  expect(profile.ok()).toBe(true);
+  const goalName = `I want to run 10 km under 50 minutes (${testInfo.project.name})`;
+  try {
+    await page.goto("/goals");
+    await page.getByRole("button", { name: /Pridať informácie/ }).click();
+    await page.getByLabel("Čo chceš pridať?").fill(goalName);
+    await page.getByRole("button", { name: "Rozpoznať" }).click();
+    await page.getByRole("button", { name: "Potvrdiť a uložiť" }).click();
+    await expect(page.getByText("0 km / 10 km", { exact: true })).toBeVisible();
+  } finally {
+    const snapshot = await (await request.get("/api/data")).json();
+    const goal = snapshot.goals.find((item: { name: string }) => item.name === goalName);
+    if (goal) await request.delete("/api/global/goals", { data: { id: goal.id } });
+  }
+});
+
 test("new local profile, smart input and personal goal persist", async ({ page, request }, testInfo) => {
   await request.patch("/api/global/profile", { data: { name: "TEST pending", modules: ["school"], mainGoal: "", onboardingComplete: false } });
   await page.goto("/");
